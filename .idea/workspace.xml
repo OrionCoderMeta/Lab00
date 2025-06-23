@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dcf20257-facc-4eab-a690-e629e3f743ae" name="Changes" comment="ricorsioni">
-      <change beforePath="$PROJECT_DIR$/queries_utili.sql" beforeDir="false" afterPath="$PROJECT_DIR$/queries_utili.sql" afterDir="false" />
+    <list default="true" id="dcf20257-facc-4eab-a690-e629e3f743ae" name="Changes" comment="sql2">
+      <change beforePath="$PROJECT_DIR$/model/funzioniExtra.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/funzioniExtra.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,13 +97,30 @@
       <option name="project" value="LOCAL" />
       <updated>1750698388537</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="sql2">
+      <option name="closed" value="true" />
+      <created>1750701433577</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1750701433577</updated>
+    </task>
+    <task id="LOCAL-00006" summary="sql2">
+      <option name="closed" value="true" />
+      <created>1750701436989</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1750701436989</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="primo commit" />
     <MESSAGE value="sql" />
     <MESSAGE value="ricorsioni" />
-    <option name="LAST_COMMIT_MESSAGE" value="ricorsioni" />
+    <MESSAGE value="sql2" />
+    <option name="LAST_COMMIT_MESSAGE" value="sql2" />
   </component>
 </project>
