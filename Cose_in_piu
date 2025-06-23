@@ -1,0 +1,44 @@
+1. gli archi si aggiungono così
+for arco in DAO.getAllEdges(dMin):
+    self._graph.add_edge(arco.partenza, arco.arrivo, weight=arco.peso)
+
+2. se c'è def getAllEdges(dMin): allora ci sarà --> cursor.execute(query, (dMin,))
+    se sono 2 allora (dMin, dMax) 3 (dMin, dMax, dCC) ...
+
+3. numero di nodi collegati al nodo n --> self._graph.degree(n)
+
+4. lista dei nodi raggiungibili da nodo --> componenti = nx.node_connected_component(self._graph, nodo)
+
+5. getInformazioni ->
+    def getInformazioni(self):
+        return f"Il Grafo è stato creato correttamente con {self._graph.number_of_nodes()} nodi e {self._graph.number_of_edges()} archi"
+
+6 .Per iterare su ogni nodo raggiungibile da un nodo
+raggiungibili = nx.node_connected_component(G, nodo)
+for comp in raggiungibili:
+    print("Nodo:", comp)
+Nel caso però il grafo NON fosse orientato
+nx.descendants(G, nodo) → tutti i nodi raggiungibili in avanti da nodo
+nx.ancestors(G, nodo) → tutti i nodi che possono raggiungere nodo
+nx.strongly_connected_components(G) → per trovare componenti fortemente connesse
+nx.weakly_connected_components(G) → per trovare componenti debolmente connesse
+
+7. def getPesoArco(self, u, v):
+    peso = self._graph[u][v]['weight']
+    return peso
+
+8. se voglio iterare e aggiungere il peso degli archi:
+    def addVolume(self):
+        for nodo in self._graph.nodes():
+            volume = 0
+            for u, v in self._graph.edges(nodo):
+                peso = self._graph[u][v]['weight']
+                volume += peso
+            nodo.setVolume(volume)
+
+9. ordinamento decrescente per peso -> # Ordinamento decrescente per volume
+        sorted_nodes = sorted(self._graph.nodes(), key=lambda v: v.peso, reverse=True)
+
+
+
+
