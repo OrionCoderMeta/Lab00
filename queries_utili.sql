@@ -51,3 +51,70 @@ JOIN laptimes l2 ON l1.raceId = l2.raceId AND l1.lap = l2.lap
 WHERE l1.milliseconds < l2.milliseconds
 GROUP BY l1.driverId, l2.driverId
 
+-- 7. Pilota ha totalizzato più punti di un altro nella stessa gara
+-- In questo grafo, ogni arco va da un pilota che ha ottenuto più punti
+-- di un altro nella stessa gara (results.points). Il peso rappresenta
+-- quante volte questo "superamento in punti" è avvenuto tra i due piloti.
+SELECT r1.driverId AS id1, r2.driverId AS id2, COUNT(*) AS peso
+FROM results r1
+JOIN results r2 ON r1.raceId = r2.raceId
+WHERE r1.points > r2.points
+  AND r1.driverId <> r2.driverId
+GROUP BY r1.driverId, r2.driverId;
+
+-- 8. Confronto tra costruttori sui giri completati in una stessa gara
+-- Per ogni coppia di team in ogni gara, se uno ha completato più giri,
+-- allora "batte" l'altro. Il peso rappresenta il numero di gare in cui
+-- questo confronto è stato verificato.
+SELECT r1.constructorId AS id1, r2.constructorId AS id2, COUNT(*) AS peso
+FROM results r1
+JOIN results r2 ON r1.raceId = r2.raceId
+WHERE r1.laps > r2.laps
+  AND r1.constructorId <> r2.constructorId
+GROUP BY r1.constructorId, r2.constructorId;
+
+-- 9. Confronto sulle vittorie nelle classifiche piloti (driverstandings)
+-- In ogni gara, se un pilota ha più vittorie registrate (driverstandings.wins)
+-- rispetto a un altro, si crea un arco da lui verso l’altro. Il peso è quante
+-- volte ha avuto più vittorie rispetto a quell’avversario nella stessa gara.
+SELECT ds1.driverId AS id1, ds2.driverId AS id2, COUNT(*) AS peso
+FROM driverstandings ds1
+JOIN driverstandings ds2 ON ds1.raceId = ds2.raceId
+WHERE ds1.wins > ds2.wins
+  AND ds1.driverId <> ds2.driverId
+GROUP BY ds1.driverId, ds2.driverId;
+
+-- 10. Confronto tra costruttori sui punti finali nelle classifiche (constructorstandings)
+-- A ogni gara, se un costruttore ha ottenuto più punti in classifica rispetto a un altro,
+-- allora crea un arco orientato verso il secondo. Il peso indica quante volte ciò è successo.
+SELECT cs1.constructorId AS id1, cs2.constructorId AS id2, COUNT(*) AS peso
+FROM constructorstandings cs1
+JOIN constructorstandings cs2 ON cs1.raceId = cs2.raceId
+WHERE cs1.points > cs2.points
+  AND cs1.constructorId <> cs2.constructorId
+GROUP BY cs1.constructorId, cs2.constructorId;
+
+-- 11. Confronto tra piloti sulla differenza tra griglia di partenza e arrivo
+-- Calcola il miglioramento: (grid - position). Un valore più alto indica che il pilota
+-- ha guadagnato più posizioni. Si crea un arco tra i due con peso = volte in cui
+-- uno ha guadagnato più posizioni dell’altro nella stessa gara.
+SELECT r1.driverId AS id1, r2.driverId AS id2, COUNT(*) AS peso
+FROM results r1
+JOIN results r2 ON r1.raceId = r2.raceId
+WHERE (r1.grid - r1.position) > (r2.grid - r2.position)
+  AND r1.driverId <> r2.driverId
+  AND r1.grid IS NOT NULL AND r1.position IS NOT NULL
+  AND r2.grid IS NOT NULL AND r2.position IS NOT NULL
+GROUP BY r1.driverId, r2.driverId;
+
+-- 12. Confronto tra piloti sul giro più veloce nella stessa gara
+-- Se un pilota ha un tempo migliore in “fastestLap” rispetto a un altro nella stessa gara,
+-- si crea un arco da lui verso l’altro. Il peso rappresenta il numero di confronti vinti.
+SELECT r1.driverId AS id1, r2.driverId AS id2, COUNT(*) AS peso
+FROM results r1
+JOIN results r2 ON r1.raceId = r2.raceId
+WHERE r1.fastestLap < r2.fastestLap
+  AND r1.fastestLap IS NOT NULL AND r2.fastestLap IS NOT NULL
+  AND r1.driverId <> r2.driverId
+GROUP BY r1.driverId, r2.driverId;
+
