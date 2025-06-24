@@ -253,10 +253,66 @@ def getBFSTree(self, nodo):
     nodi = list(tree.nodes())
     return f"BFS da {nodo}: {len(nodi)} nodi raggiunti\n" + ", ".join(str(n) for n in nodi)
 
-"""Restituisce il nodo con grado massimo (orientato o non)"""
+
+"""Restituisce il nodo con grado massimo (orientato o non) QUA E' SOMMA USCENTI + ENTRAMBI, per la 
+    differenza vedere sotto"""
 def getNodoConGradoMassimo(self):
     nodo, grado = max(self._graph.degree, key=lambda x: x[1])
     return f"Nodo con grado massimo: {nodo} ({grado} archi)"
+
+
+"""Restituisce i 5 nodi con differenza (peso uscente - entrante) più alta (solo ORIENTATO)"""
+def getTopDifferenzaPesoUscente(self):
+    differenze = []
+
+    for nodo in self._graph.nodes:
+        peso_uscenti = 0
+        for u, v in self._graph.out_edges(nodo):
+            peso_uscenti += self._graph[u][v]['weight']
+
+        peso_entranti = 0
+        for u, v in self._graph.in_edges(nodo):
+            peso_entranti += self._graph[u][v]['weight']
+
+        diff = peso_uscenti - peso_entranti
+        differenze.append((nodo, diff))
+
+    # Ordina per differenza decrescente
+    differenze.sort(key=lambda x: x[1], reverse=True)
+
+    # Prendi i primi 5
+    top5 = differenze[:5]
+
+    # Costruisci il risultato in formato stringa
+    result = ""
+    for nodo, diff in top5:
+        result += f"{nodo} → diff (uscente - entrante): {diff}\n"
+
+    return result
+
+
+"""Restituisce i nodi con il maggior valore di (entranti - uscenti)
+   Ordinati in modo DECRESCENTE in base alla differenza"""
+def getTopNodiDifferenzaEntrantiUscenti(self, top_n=5):
+    differenze = []
+
+    for nodo in self._graph.nodes:
+        entranti = self._graph.in_degree(nodo)
+        uscenti = self._graph.out_degree(nodo)
+        diff = entranti - uscenti  # valore positivo = più archi entranti
+
+        differenze.append((nodo, diff))
+
+    # Ordina per differenza decrescente
+    differenze.sort(key=lambda x: x[1], reverse=True)
+
+    # Crea output leggibile
+    result = ""
+    for nodo, diff in differenze[:top_n]:
+        result += f"{nodo}: entranti - uscenti = {diff}\n"
+
+    return result
+
 
 
 
