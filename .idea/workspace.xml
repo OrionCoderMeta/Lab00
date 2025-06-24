@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dcf20257-facc-4eab-a690-e629e3f743ae" name="Changes" comment="arco giusta" />
+    <list default="true" id="dcf20257-facc-4eab-a690-e629e3f743ae" name="Changes" comment="tstmodel">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queries_utili.sql" beforeDir="false" afterPath="$PROJECT_DIR$/queries_utili.sql" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -127,7 +130,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750784930834</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="tstmodel">
+      <option name="closed" value="true" />
+      <created>1750785027485</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1750785027485</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -137,6 +148,7 @@
     <MESSAGE value="sql2" />
     <MESSAGE value="funzioni" />
     <MESSAGE value="arco giusta" />
-    <option name="LAST_COMMIT_MESSAGE" value="arco giusta" />
+    <MESSAGE value="tstmodel" />
+    <option name="LAST_COMMIT_MESSAGE" value="tstmodel" />
   </component>
 </project>
