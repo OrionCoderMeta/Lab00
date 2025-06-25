@@ -293,13 +293,13 @@ def getTopDifferenzaPesoUscente(self):
 
 """Restituisce i nodi con il maggior valore di (entranti - uscenti)
    Ordinati in modo DECRESCENTE in base alla differenza"""
-def getTopNodiDifferenzaEntrantiUscenti(self, top_n=5):
+def getNodiDifferenzaEntrantiUscenti(self):
     differenze = []
 
     for nodo in self._graph.nodes:
         entranti = self._graph.in_degree(nodo)
         uscenti = self._graph.out_degree(nodo)
-        diff = entranti - uscenti  # valore positivo = più archi entranti
+        diff = entranti - uscenti  # positivo = più entranti che uscenti
 
         differenze.append((nodo, diff))
 
@@ -308,10 +308,11 @@ def getTopNodiDifferenzaEntrantiUscenti(self, top_n=5):
 
     # Crea output leggibile
     result = ""
-    for nodo, diff in differenze[:top_n]:
+    for nodo, diff in differenze:  # puoi aggiungere [:N] se vuoi limitare
         result += f"{nodo}: entranti - uscenti = {diff}\n"
 
     return result
+
 
 
 
