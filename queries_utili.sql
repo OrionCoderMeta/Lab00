@@ -145,3 +145,80 @@ WHERE r1.raceId = r2.raceId
   AND r.year = 1951
 GROUP BY r1.driverId, r2.driverId;
 
+-- Confronto tra piloti dello stesso team nel numero di pit stop effettuati in un anno
+-- Arco tra 2 piloti del team scelto, con peso = differenza di numero pit stop
+SELECT
+    p1.driverId AS id1,
+    p2.driverId AS id2,
+    ABS(COUNT(p1.driverId) - COUNT(p2.driverId)) AS peso
+FROM pitstops p1, pitstops p2, results r1, results r2, races ra
+WHERE p1.driverId = r1.driverId
+  AND p2.driverId = r2.driverId
+  AND p1.raceId = r1.raceId
+  AND p2.raceId = r2.raceId
+  AND r1.constructorId = r2.constructorId
+  AND r1.constructorId = 9 -- <--- qui metti l'id del team desiderato
+  AND p1.driverId < p2.driverId -- <--- per evitare duplicati (grafo non orientato)
+  AND p1.raceId = ra.raceId
+  AND ra.year = 1951 -- <--- metti l’anno desiderato
+GROUP BY p1.driverId, p2.driverId;
+
+-- Tra i piloti dello stesso team, chi ha guadagnato più posizioni in gara (differenza griglia - arrivo)
+SELECT r1.driverId AS id1, r2.driverId AS id2, COUNT(*) AS peso
+FROM results r1, results r2, races r
+WHERE r1.raceId = r2.raceId
+  AND r1.constructorId = r2.constructorId
+  AND r1.driverId <> r2.driverId
+  AND r1.raceId = r.raceId
+  AND r1.constructorId = 9 -- <--- ID team scelto
+  AND r.year = 1951
+  AND (r1.grid - r1.position) > (r2.grid - r2.position)
+GROUP BY r1.driverId, r2.driverId;
+
+-- Confronta due piloti dello stesso team per punti complessivi (non orientato, peso = differenza)
+SELECT r1.driverId AS id1, r2.driverId AS id2, ABS(SUM(r1.points) - SUM(r2.points)) AS peso
+FROM results r1, results r2, races r
+WHERE r1.raceId = r2.raceId
+  AND r1.constructorId = r2.constructorId
+  AND r1.driverId < r2.driverId
+  AND r1.raceId = r.raceId
+  AND r1.constructorId = 9 -- <--- team scelto
+  AND r.year = 1951
+GROUP BY r1.driverId, r2.driverId;
+
+-- Un pilota specifico confrontato con tutti gli altri: vince se ha fatto più punti nella stessa gara
+SELECT r1.driverId AS id1, r2.driverId AS id2, COUNT(*) AS peso
+FROM results r1, results r2, races r
+WHERE r1.raceId = r2.raceId
+  AND r1.driverId = 1 -- <--- pilota scelto
+  AND r2.driverId <> r1.driverId
+  AND r1.points > r2.points
+  AND r1.raceId = r.raceId
+  AND r.year = 1951
+GROUP BY r1.driverId, r2.driverId;
+
+-- Team scelto batte altri team se ha totalizzato più giri nella stessa gara
+SELECT r1.constructorId AS id1, r2.constructorId AS id2, COUNT(*) AS peso
+FROM results r1, results r2, races r
+WHERE r1.raceId = r2.raceId
+  AND r1.constructorId = 9 -- <--- team scelto
+  AND r1.constructorId <> r2.constructorId
+  AND r1.raceId = r.raceId
+  AND r.year = 1951
+GROUP BY r1.constructorId, r2.constructorId
+HAVING SUM(r1.laps) > SUM(r2.laps);
+
+-- Piloti dello stesso team: arco tra chi ha più punti medi all’anno
+SELECT r1.driverId AS id1, r2.driverId AS id2, ABS(AVG(r1.points) - AVG(r2.points)) AS peso
+FROM results r1, results r2, races r
+WHERE r1.raceId = r2.raceId
+  AND r1.constructorId = r2.constructorId
+  AND r1.driverId < r2.driverId
+  AND r1.constructorId = 9 -- <--- team scelto
+  AND r1.raceId = r.raceId
+  AND r.year = 1951
+GROUP BY r1.driverId, r2.driverId;
+
+
+
+
