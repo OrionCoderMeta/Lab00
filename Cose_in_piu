@@ -43,6 +43,9 @@ nx.descendants(G, nodo) → tutti i nodi raggiungibili in avanti da nodo
 nx.ancestors(G, nodo) → tutti i nodi che possono raggiungere nodo
 nx.strongly_connected_components(G) → per trovare componenti fortemente connesse
 nx.weakly_connected_components(G) → per trovare componenti debolmente connesse
+componenti = list(nx.connected_components(G))  # Non orientato
+componenti = list(nx.weakly_connected_components(G))  # Orientato
+
 
 8. se voglio iterare e aggiungere il peso degli archi:
     def addVolume(self):
@@ -55,6 +58,28 @@ nx.weakly_connected_components(G) → per trovare componenti debolmente connesse
 
 9. ordinamento decrescente per peso -> # Ordinamento decrescente per volume
         sorted_nodes = sorted(self._graph.nodes(), key=lambda v: v.peso, reverse=True)
+
+10. infinito -> float('inf') (meno '-inf')
+
+11. tasso: int = field(default=0)  # ← inizializzato a 0, utile se voglio aggiungere qualche campo a un oggetto dopo
+
+12. Serve per trovare il cammino con peso minimo (non il numero di nodi) tra due nodi in un grafo pesato e orientato o non.
+path = nx.dijkstra_path(self._graph, source=n1, target=n2, weight='weight')
+peso = nx.dijkstra_path_length(self._graph, source=n1, target=n2, weight='weight')
+
+13.nx.dfs_tree(G, source) e nx.bfs_tree(G, source)
+Restituiscono un albero di visita a partire dal nodo source. Serve per esplorare i nodi raggiungibili in profondità (DFS) o in ampiezza (BFS).
+tree = nx.dfs_tree(self._graph, source)
+nodi = list(tree.nodes())  # tutti i nodi raggiungibili in profondità, un cammino lungo
+tree = nx.bfs_tree(self._graph, source)
+nodi = list(tree.nodes()) # tutti i nodi raggiungibili in ampiezza, usata anche per trovare cammino più breve in nodi
+
+14. cammino più breve (in nodi):
+path = nx.shortest_path(tree, source=source, target=destinazione)
+
+
+
+
 
 
 
