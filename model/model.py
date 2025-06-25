@@ -78,19 +78,19 @@ class Model:
         peso = self._graph[u][v]['weight']
         return peso
 
-    def buildGraph(self, anno, state):
+    def buildGraph(self, anno):
         self.nodes.clear()
         self.archi.clear()
         self._graph.clear()
-        self.nodi = DAO.getNodes(anno, state)
+        self.nodi = DAO.getNodes(anno)
         self._graph.add_nodes_from(self.nodi)
 
         for n in self.nodi:
             self.map[n.id] = n
 
-        for arco in DAO.getEdges(anno, state, self.map):
+        """for arco in DAO.getEdges(anno, self.map):
             self.archi.append(arco)
-            self._graph.add_edge(arco.n1, arco.n2, weight=arco.peso)
+            self._graph.add_edge(arco.n1, arco.n2, weight=arco.peso)"""
 
     def getInformazioni(self):
         return f"Il Grafo è stato creato correttamente con {self._graph.number_of_nodes()} nodi e {self._graph.number_of_edges()} archi"

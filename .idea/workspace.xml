@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dcf20257-facc-4eab-a690-e629e3f743ae" name="Changes" comment="sql con wher">
+    <list default="true" id="dcf20257-facc-4eab-a690-e629e3f743ae" name="Changes" comment="al">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cose_in_piu" beforeDir="false" afterPath="$PROJECT_DIR$/Cose_in_piu" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model/model.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +147,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750787164525</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="al">
+      <option name="closed" value="true" />
+      <created>1750788337712</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1750788337712</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -157,6 +167,7 @@
     <MESSAGE value="arco giusta" />
     <MESSAGE value="tstmodel" />
     <MESSAGE value="sql con wher" />
-    <option name="LAST_COMMIT_MESSAGE" value="sql con wher" />
+    <MESSAGE value="al" />
+    <option name="LAST_COMMIT_MESSAGE" value="al" />
   </component>
 </project>

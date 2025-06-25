@@ -1,6 +1,31 @@
-1. gli archi si aggiungono così
-for arco in DAO.getAllEdges(dMin):
-    self._graph.add_edge(arco.partenza, arco.arrivo, weight=arco.peso)
+0. GET_YEARS
+
+@staticmethod
+    def getYears():
+        cnx = DBConnect.get_connection()
+        result = []
+        if cnx is None:
+            print("Connessione fallita")
+        else:
+            cursor = cnx.cursor(dictionary=True)
+            query = """select distinct s.`year` as anno
+                        from seasons s
+                        order by s.`year` desc """
+            cursor.execute(query)
+
+            for row in cursor:
+                result.append(row["anno"])
+            cursor.close()
+            cnx.close()
+        return result
+
+1. DRIVER per l'anno che hanno tagliato il traguardo
+
+select DISTINCT d.driverId as driverID, d.forename as name, d.surname as surname
+from drivers d, races r, results r2
+where d.driverId = r2.driverId and r.raceId = r2.raceId
+and r2.`position` is not null
+and YEAR(r.date) = %s
 
 2. se c'è def getAllEdges(dMin): allora ci sarà --> cursor.execute(query, (dMin,))
     se sono 2 allora (dMin, dMax) 3 (dMin, dMax, dCC) ...
@@ -8,10 +33,6 @@ for arco in DAO.getAllEdges(dMin):
 3. numero di nodi collegati al nodo n --> self._graph.degree(n)
 
 4. lista dei nodi raggiungibili da nodo --> componenti = nx.node_connected_component(self._graph, nodo)
-
-5. getInformazioni ->
-    def getInformazioni(self):
-        return f"Il Grafo è stato creato correttamente con {self._graph.number_of_nodes()} nodi e {self._graph.number_of_edges()} archi"
 
 6 .Per iterare su ogni nodo raggiungibile da un nodo
 raggiungibili = nx.node_connected_component(G, nodo)
@@ -22,10 +43,6 @@ nx.descendants(G, nodo) → tutti i nodi raggiungibili in avanti da nodo
 nx.ancestors(G, nodo) → tutti i nodi che possono raggiungere nodo
 nx.strongly_connected_components(G) → per trovare componenti fortemente connesse
 nx.weakly_connected_components(G) → per trovare componenti debolmente connesse
-
-7. def getPesoArco(self, u, v):
-    peso = self._graph[u][v]['weight']
-    return peso
 
 8. se voglio iterare e aggiungere il peso degli archi:
     def addVolume(self):
